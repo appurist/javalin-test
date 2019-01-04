@@ -6,5 +6,8 @@ routes using Maven.
 #### To compile:
 `mvn compile`
 
+#### To package into a .jar file:
+`mvn package`
+
 #### To run:
 `mvn exec:exec`
