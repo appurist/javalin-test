@@ -1,6 +1,8 @@
 package com.appurist;
 
 import io.javalin.Javalin;
+import io.javalin.Context;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class JavalinTest {
     public static void main(String[] args) {
@@ -19,23 +21,20 @@ public class JavalinTest {
         });
 
 
-        /* Straight from the example page
-            at https://javalin.io/documentation#handler-groups
-            yet fails to compile, even with Javalin 2.5.0 ...
+        // from the example page at https://javalin.io/documentation#handler-groups
         app.routes(() -> {
             path("users", () -> {
-                get(UserController::getAllUsers);
-                post(UserController::createUser);
+                get(JavalinTest::getAllUsers);
+                post(JavalinTest::createUser);
                 path(":id", () -> {
-                    get(UserController::getUser);
-                    patch(UserController::updateUser);
-                    delete(UserController::deleteUser);
+                    get(JavalinTest::getUser);
+                    patch(JavalinTest::updateUser);
+                    delete(JavalinTest::deleteUser);
                 });
             });
         });
-        */
 
-        app.get("/hello/:name", ctx -> {
+        app.post("/hello/:name", ctx -> {
             ctx.result("Hello: " + ctx.pathParam("name"));
         });
         app.get("/hello/*/and/*", ctx -> {
@@ -51,5 +50,26 @@ public class JavalinTest {
         // app.enableWebJars();
 
         app.start(7000);
+    }
+
+    private static void getAllUsers(Context ctx)
+    {
+        ctx.result("returns all users");
+    }
+    private static void createUser(Context ctx)
+    {
+        ctx.result("creats a user");
+    }
+    private static void getUser(Context ctx)
+    {
+        ctx.result("returns a specific user " + ctx.pathParam("id"));
+    }
+    private static void updateUser(Context ctx)
+    {
+        ctx.result("updates a specific user " + ctx.pathParam("id"));
+    }
+    private static void deleteUser(Context ctx)
+    {
+        ctx.result("deletes a specific user " + ctx.pathParam("id"));
     }
 }
