@@ -33,6 +33,13 @@ public class JavalinTest {
                 });
             });
         });
+        /* the nested calls above are equivalent to this:
+        app.get("/users", JavalinTest::getAllUsers);
+        app.post("/users", JavalinTest::createUser);
+        app.get("/users/:id", JavalinTest::getUser);
+        app.patch("/users/:id", JavalinTest::updateUser);
+        app.delete("/users/:id", JavalinTest::deleteUser);
+        */
 
         app.post("/hello/:name", ctx -> {
             ctx.result("Hello: " + ctx.pathParam("name"));
